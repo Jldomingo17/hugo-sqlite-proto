@@ -1,72 +1,13 @@
 #+TITLE: 'Project title BUGS.org file'
-#+AUTHOR: Fénix
-#+DATE: <2026-01-01>
-#+EMAIL: fenix@librebits.info
-#+FILETAGS: :proyecto:desarrollo:
+#+AUTHOR: Sergio Batres / Fénix
+#+DATE: <2026-11-09>
+#+FILETAGS: :proyecto:desarrollo:sgbd:
 
-#+TODO: BUG TESTING | ERROR FIXED DEPRECATED
-#+STARTUP: overview hidestars
-
-* ACTIVE BUGS
-** BUG pandoc - 'Error producing PDF'
+* COMPLETED BUGS & COMPATIBILITY
+** FIXED Compatibilidad de plantilla layouts/index.html con Hugo v0.145+
 :PROPERTIES:
-:STATUS:   ACTIVE
-:CREATED:  [2026-02-20]
-:SEVERITY: [HIGH/MEDIUM/LOW]
+:STATUS: FIXED
+:DATE: [2026-11-09]
 :END:
-
-*** Steps to Reproduce
-$ cd hugo-sqlite-proto/
-fenix@anka4 ~/hugo-sqlite-proto (main)
-$ ls
-content  hugo.toml  layouts  Makefile  README.html  README.md  static  tools
-fenix@anka4 ~/hugo-sqlite-proto (main)
-$ tldr pandoc
-pandoc
-
-Convert documents between various formats.
-More information: https://pandoc.org.
-
- - Convert file to PDF (the output format is determined by file extension):
-   pandoc input.md -o output.pdf
-
- - Force conversion to use a specific format:
-   pandoc input.docx --to gfm -o output.md
-
- - Convert to a standalone file with the appropriate headers/footers (for LaTeX, HTML, etc.):
-   pandoc input.md -s -o output.tex
-
- - List all supported input formats:
-   pandoc --list-input-formats
-
- - List all supported output formats:
-   pandoc --list-output-formats
-fenix@anka4 ~/hugo-sqlite-proto (main)
-$ pandoc README.md -o hugo-sqlite-proto_README.pdf 
-*** Expected Behavior
-Pandoc to export .md -> .pdf  correctly 
-
-*** Actual Behavior
-$ pandoc README.md -o hugo-sqlite-proto_README.pdf 
-
-Error producing PDF.
-! LaTeX Error: File `lmodern.sty' not found.
-
-Type X to quit or <RETURN> to proceed,
-or enter new name. (Default extension: sty)
-
-Enter file name: 
-! Emergency stop.
-<read *> 
-         
-l.19 \ifPDFTeX
-
-fenix@anka4 ~/hugo-sqlite-proto (main)
-$ 
-
-*** Investigation Notes
-- [Notes from debugging]
-
-*** Potential Fix
-- [Ideas for resolution]
- 
+- hugo.Data.tags deprecado en versiones recientes de Hugo.
+- Actualizado a site.Data.tags para compatibilidad completa en Linux y Windows.
