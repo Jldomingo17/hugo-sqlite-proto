@@ -2,21 +2,16 @@
 """tools/index.py — content/**/*.md → SQLite (solo en build) → JSON estático.
 
 Filosofía Unix: hace UNA cosa. Lee Markdown, rellena build/site.db y la
-consulta con SQL para exportar dos ficheros:
+consulta con SQL para exportar tres ficheros:
 
   static/search.json  → lo consume static/search.js en el navegador
   data/tags.json      → lo consume Hugo en layouts/index.html
+  data/stats.json     → estadísticas de palabras para el footer (Ejercicio 3)
 
 La base de datos NO se despliega: public/ contiene solo ficheros estáticos.
 
 Solo biblioteca estándar (sqlite3, json, re, pathlib). Estilo funcional:
 funciones puras para parsear; los efectos (disco, SQL) quedan al final.
-
-Límites (a propósito, KISS): front matter YAML con pares `clave: valor` y
-listas en línea `tags: [a, b]`. Nada de TOML (+++) ni listas multilínea.
-
-Docs: https://docs.python.org/3/library/sqlite3.html
-      https://www.sqlite.org/json1.html
 """
 import json
 import re
@@ -29,7 +24,9 @@ CONTENT = Path("content")
 DB = Path("build/site.db")
 OUT_SEARCH = Path("static/search.json")
 OUT_TAGS = Path("data/tags.json")
+OUT_STATS = Path("data/stats.json")
 
+# SCHEMA con tabla posts, tags y tabla words (Ejercicio 3)
 SCHEMA = """
 CREATE TABLE posts (
   url     TEXT PRIMARY KEY,
@@ -42,6 +39,10 @@ CREATE TABLE tags (
   url TEXT NOT NULL REFERENCES posts(url),
   tag TEXT NOT NULL,
   PRIMARY KEY (url, tag)
+);
+CREATE TABLE words (
+  url TEXT PRIMARY KEY REFERENCES posts(url),
+  n   INTEGER NOT NULL
 );
 """
 
@@ -64,6 +65,16 @@ SELECT json_group_array(json_object('tag', tag, 'total', total))
 FROM (
   SELECT tag, COUNT(*) AS total FROM tags GROUP BY tag ORDER BY total DESC, tag
 )
+"""
+
+# Ejercicio 3: Consulta agregada de palabras totales y promedio
+Q_STATS = """
+SELECT json_object(
+  'total_words', COALESCE(SUM(n), 0),
+  'avg_words', COALESCE(ROUND(AVG(n), 1), 0),
+  'total_posts', COUNT(*)
+)
+FROM words
 """
 
 # --- funciones puras ---------------------------------------------------------
@@ -109,6 +120,11 @@ def shorten(text, n=160):
     return text if len(text) <= n else text[:n].rsplit(" ", 1)[0] + "…"
 
 
+def count_words(text):
+    """Ejercicio 3: Función pura que cuenta palabras de un texto."""
+    return len(text.split())
+
+
 def url_of(path):
     """content/posts/x.md → /posts/x/  (como hace Hugo)."""
     parts = path.relative_to(CONTENT).with_suffix("").parts
@@ -129,12 +145,14 @@ def read_page(path):
         "tags": tags if isinstance(tags, list) else [tags],
         "draft": meta.get("draft", False) is True,
         "text": text,
+        "words": count_words(text),
     }
 
 
-def read_all():
+def read_all(include_drafts=False):
+    """Ejercicio 2: Soporte para incluir borradores si include_drafts=True."""
     files = (p for p in sorted(CONTENT.rglob("*.md")) if p.name != "_index.md")
-    return [page for page in map(read_page, files) if not page["draft"]]
+    return [page for page in map(read_page, files) if include_drafts or not page["draft"]]
 
 
 # --- efectos: disco y SQL ----------------------------------------------------
@@ -150,6 +168,10 @@ def build_db(pages):
     con.executemany(
         "INSERT OR IGNORE INTO tags(url, tag) VALUES (?, ?)",
         [(p["url"], t) for p in pages for t in p["tags"]])
+    # Ejercicio 3: Inserción en la tabla words
+    con.executemany(
+        "INSERT INTO words(url, n) VALUES (?, ?)",
+        [(p["url"], p["words"]) for p in pages])
     con.commit()
     return con
 
@@ -162,12 +184,19 @@ def export(con, query, out):
 def main():
     if not CONTENT.is_dir():
         sys.exit("index.py: ejecútalo desde la raíz del repo (make index)")
-    pages = read_all()
+    
+    # Ejercicio 2: flag --drafts o -D para sincronizar con hugo server -D
+    include_drafts = "--drafts" in sys.argv or "-D" in sys.argv
+    pages = read_all(include_drafts=include_drafts)
+    
     con = build_db(pages)
     export(con, Q_SEARCH, OUT_SEARCH)
     export(con, Q_TAGS, OUT_TAGS)
+    export(con, Q_STATS, OUT_STATS)
     con.close()
-    print(f"index: {len(pages)} páginas → {OUT_SEARCH}, {OUT_TAGS}")
+    
+    draft_msg = " (incluyendo borradores)" if include_drafts else ""
+    print(f"index: {len(pages)} páginas{draft_msg} → {OUT_SEARCH}, {OUT_TAGS}, {OUT_STATS}")
 
 
 if __name__ == "__main__":
