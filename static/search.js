@@ -20,9 +20,26 @@ const haystack = post => normalize(`${post.title} ${post.tags.join(" ")} ${post.
 // Un post coincide si contiene TODOS los términos
 const matches = ts => post => ts.every(t => haystack(post).includes(t));
 
+// Ejercicio 4: Función pura que calcula el número ponderado de coincidencias
+const score = ts => post => {
+  const normTitle = normalize(post.title);
+  const normText = haystack(post);
+  return ts.reduce((acc, t) => {
+    const textMatches = normText.split(t).length - 1;
+    const titleMatches = normTitle.split(t).length - 1;
+    return acc + textMatches + (titleMatches * 3);
+  }, 0);
+};
+
+// Búsqueda pura ordenada por relevancia descendente
 const search = (posts, query) => {
   const ts = terms(query);
-  return ts.length ? posts.filter(matches(ts)) : [];
+  if (!ts.length) return [];
+  return posts
+    .filter(matches(ts))
+    .map(post => ({ post, relevance: score(ts)(post) }))
+    .sort((a, b) => b.relevance - a.relevance)
+    .map(({ post }) => post);
 };
 
 // --- efectos (DOM) ----------------------------------------------------------
