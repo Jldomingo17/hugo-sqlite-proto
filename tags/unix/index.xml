@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Unix on Hugo + SQLite | Sergio Batres</title><link>https://jldomingo17.github.io/hugo-sqlite-proto/tags/unix/</link><description>Recent content in Unix on Hugo + SQLite | Sergio Batres</description><generator>Hugo</generator><language>es</language><lastBuildDate>Wed, 28 Oct 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://jldomingo17.github.io/hugo-sqlite-proto/tags/unix/index.xml" rel="self" type="application/rss+xml"/><item><title>SQLite solo en tiempo de build</title><link>https://jldomingo17.github.io/hugo-sqlite-proto/posts/sqlite-en-build-time/</link><pubDate>Wed, 28 Oct 2026 00:00:00 +0000</pubDate><guid>https://jldomingo17.github.io/hugo-sqlite-proto/posts/sqlite-en-build-time/</guid><description>&lt;p>SQL es muy buen lenguaje para &lt;strong>agrupar y filtrar&lt;/strong>. Un sitio estático no
+necesita una base de datos &lt;em>en ejecución&lt;/em>, pero sí puede usarla &lt;em>mientras se
+construye&lt;/em>:&lt;/p>
+&lt;ol>
+&lt;li>&lt;code>tools/index.py&lt;/code> lee el Markdown y rellena &lt;code>build/site.db&lt;/code>.&lt;/li>
+&lt;li>Dos consultas con &lt;code>json_group_array&lt;/code> exportan JSON.&lt;/li>
+&lt;li>Hugo y el navegador consumen esos JSON como cualquier otro fichero.&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-sql" data-lang="sql">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">SELECT&lt;/span> tag, &lt;span style="color:#66d9ef">COUNT&lt;/span>(&lt;span style="color:#f92672">*&lt;/span>) &lt;span style="color:#66d9ef">AS&lt;/span> total
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">FROM&lt;/span> tags &lt;span style="color:#66d9ef">GROUP&lt;/span> &lt;span style="color:#66d9ef">BY&lt;/span> tag &lt;span style="color:#66d9ef">ORDER&lt;/span> &lt;span style="color:#66d9ef">BY&lt;/span> total &lt;span style="color:#66d9ef">DESC&lt;/span>;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Cada pieza hace una cosa y se conecta con las demás mediante ficheros:
+filosofía Unix pura.&lt;/p></description></item></channel></rss>

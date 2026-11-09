@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kiss on Hugo + SQLite | Sergio Batres</title><link>https://jldomingo17.github.io/hugo-sqlite-proto/tags/kiss/</link><description>Recent content in Kiss on Hugo + SQLite | Sergio Batres</description><generator>Hugo</generator><language>es</language><lastBuildDate>Thu, 29 Oct 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://jldomingo17.github.io/hugo-sqlite-proto/tags/kiss/index.xml" rel="self" type="application/rss+xml"/><item><title>Búsqueda sin servidor</title><link>https://jldomingo17.github.io/hugo-sqlite-proto/posts/busqueda-sin-servidor/</link><pubDate>Thu, 29 Oct 2026 00:00:00 +0000</pubDate><guid>https://jldomingo17.github.io/hugo-sqlite-proto/posts/busqueda-sin-servidor/</guid><description>&lt;p>El navegador descarga &lt;code>search.json&lt;/code> una vez y filtra en memoria con
+&lt;code>fetch&lt;/code>, &lt;code>filter&lt;/code> y &lt;code>every&lt;/code>. Sin frameworks, sin dependencias.&lt;/p>
+&lt;p>Referencias en MDN:&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://developer.mozilla.org/es/docs/Web/API/Fetch_API">Fetch API&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/filter">Array.prototype.filter()&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/String/normalize">String.prototype.normalize()&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;p>Prueba a buscar &amp;ldquo;sqlite&amp;rdquo; o &amp;ldquo;mdn&amp;rdquo; en la página de inicio.&lt;/p></description></item><item><title>Hola, Hugo</title><link>https://jldomingo17.github.io/hugo-sqlite-proto/posts/hola-hugo/</link><pubDate>Tue, 27 Oct 2026 00:00:00 +0000</pubDate><guid>https://jldomingo17.github.io/hugo-sqlite-proto/posts/hola-hugo/</guid><description>&lt;p>Hugo lee ficheros Markdown con &lt;em>front matter&lt;/em> y escribe HTML en &lt;code>public/&lt;/code>.
+No hay servidor de aplicaciones, ni base de datos, ni procesos que vigilar.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>hugo new site mi-sitio
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>hugo server
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Escenario real: un departamento publica apuntes y entregas. Con Hugo, el
+despliegue es copiar una carpeta (&lt;code>rsync&lt;/code>, &lt;code>scp&lt;/code>, GitHub Pages&amp;hellip;) y el
+servidor web solo sirve ficheros.&lt;/p></description></item></channel></rss>

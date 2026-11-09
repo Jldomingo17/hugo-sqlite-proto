@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Javascript on Hugo + SQLite | Sergio Batres</title><link>https://jldomingo17.github.io/hugo-sqlite-proto/tags/javascript/</link><description>Recent content in Javascript on Hugo + SQLite | Sergio Batres</description><generator>Hugo</generator><language>es</language><lastBuildDate>Thu, 29 Oct 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://jldomingo17.github.io/hugo-sqlite-proto/tags/javascript/index.xml" rel="self" type="application/rss+xml"/><item><title>Búsqueda sin servidor</title><link>https://jldomingo17.github.io/hugo-sqlite-proto/posts/busqueda-sin-servidor/</link><pubDate>Thu, 29 Oct 2026 00:00:00 +0000</pubDate><guid>https://jldomingo17.github.io/hugo-sqlite-proto/posts/busqueda-sin-servidor/</guid><description>&lt;p>El navegador descarga &lt;code>search.json&lt;/code> una vez y filtra en memoria con
+&lt;code>fetch&lt;/code>, &lt;code>filter&lt;/code> y &lt;code>every&lt;/code>. Sin frameworks, sin dependencias.&lt;/p>
+&lt;p>Referencias en MDN:&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://developer.mozilla.org/es/docs/Web/API/Fetch_API">Fetch API&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/filter">Array.prototype.filter()&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/String/normalize">String.prototype.normalize()&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;p>Prueba a buscar &amp;ldquo;sqlite&amp;rdquo; o &amp;ldquo;mdn&amp;rdquo; en la página de inicio.&lt;/p></description></item></channel></rss>
