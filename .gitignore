@@ -8,3 +8,7 @@ build/
 static/search.json
 data/tags.json
 data/stats.json
+
+# Python cache
+__pycache__/
+*.pyc
